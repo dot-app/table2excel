@@ -1,0 +1,24 @@
+{
+  "name": "table2excel",
+  "version": "1.0.0",
+  "description": "text and image save to excel",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dot-app/table2excel.git"
+  },
+  "keywords": [
+    "jsexcel",
+    "excel",
+    "table2excel"
+  ],
+  "author": "dotapp",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dot-app/table2excel/issues"
+  },
+  "homepage": "https://github.com/dot-app/table2excel#readme"
+}
