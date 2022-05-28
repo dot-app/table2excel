@@ -1,0 +1,70 @@
+<html>
+
+<head>
+    <title>table2excel Demo</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    <style>
+        .x {}
+    </style>
+</head>
+
+<body>
+    <button onclick="test()" style="height:100px; width:300px">test</button>
+
+
+    <script type="module">
+        import table2excel from './index.js'
+        window.table2excel = table2excel
+    </script>
+    <script>
+        function test() {
+
+            const column = [
+                {
+                    title: 'Pic',
+                    type: 'image',
+                    width: 80,
+                    height: 50,
+                },
+                { title: 'Name', bg: '#e2efda' },
+                { title: 'Nickname', bg: '#e2efda' },
+                { title: 'Mobile', bg: '#fce4d6' },
+                { title: 'Address', bg: '#fce4d6' },
+            ]
+            const data = [
+                {
+                    pic: {
+                        value: 'https://profile-avatar.csdnimg.cn/78fad80e6b8c40eb9da8ff5ca9697eb5_xunzaosiyecao.jpg!1',
+                        width: 80,
+                        height: 100
+                    },
+                    name: { value: 'xiao', rowspan: 3 },
+                    nickname: 11,
+                    mobile: '1362500000',
+                    address: 'fujian xiamen',
+                },
+                {
+                    pic: 'https://profile-avatar.csdnimg.cn/78fad80e6b8c40eb9da8ff5ca9697eb5_xunzaosiyecao.jpg!1',
+                    name: 'xiao2',
+                    nickname: 'xiaoxiao2',
+                    mobile: '13625000002',
+                    address: 'fujian xiamen2',
+                },
+                {
+                    pic: 'https://profile-avatar.csdnimg.cn/78fad80e6b8c40eb9da8ff5ca9697eb5_xunzaosiyecao.jpg!1',
+                    name: 'xiao3',
+                    nickname: 'xiaoxiao3',
+                    mobile: '13625000003',
+                    address: 'fujian xiamen3',
+                },
+            ]
+            console.log(data)
+
+            const excelName = 'table2excel'
+            window.table2excel(column, data, excelName)
+        }
+    </script>
+
+</body>
+
+</html>

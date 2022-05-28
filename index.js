@@ -104,7 +104,7 @@ const tableToNotIE = (function () {
 
 		const url = uri + base64(format(template, ctx));
 
-		if (navigator.userAgent.indexOf("Firefox") > -1){
+		if (navigator.userAgent.indexOf("Firefox") > -1) {
 			window.location.href = url
 		} else {
 			const aLink = document.createElement('a');
@@ -129,37 +129,61 @@ const table2excel = (column, data, excelName) => {
 		text: getTextHtml
 	}
 
-	let thead = column.reduce((result, item) => {
-		result += `<th>${item.title}</th>`
-		return result
-	}, '')
-
+	let thead = '';
+	for (let i = 0; i < column.length; i++) {
+		let item = column[i]
+		thead += `<th>${item.title}</th>`
+	}
 	thead = `<thead><tr>${thead}</tr></thead>`
 
-	let tbody = data.reduce((result, row) => {
-		const temp = column.reduce((tds, col) => {
-			tds += typeMap[col.type || 'text'](row[col.key], col)
-			return tds
-		}, '')
-		result += `<tr>${temp}</tr>`
-		return result
-	}, '')
+	let tbody = ''
+	for (let i = 0; i < data.length; i++) {
+		let row = data[i]
+		let tds = ''
 
+		for (let j = 0; j < Object.keys(row).length; j++) {
+
+
+			let key = Object.keys(row)[j]
+			let col = row[key]
+			let value = col
+
+
+			let options = JSON.parse(JSON.stringify(column[j]))
+			if (typeof col === 'object') {
+				value = col.value;
+				options = JSON.parse(JSON.stringify(Object.assign(options, col)))
+			}
+
+			console.log(options)
+			tds += typeMap[column[j].type || 'text'](value, options)
+		}
+		tbody += `<tr>${tds}</tr>`
+	}
 	tbody = `<tbody>${tbody}</tbody>`
+
+	// console.log(tbody)
+	// return;
+
 
 	const table = thead + tbody
 
 	// 导出表格
 	exportToExcel(table, excelName)
 
-    function getTextHtml(val, options) {
-        let numberformat = options.numberformat || 'vnd.ms-excel.numberformat:@';
-        return `<td style="text-align: center;${numberformat}">${val}</td>`
-    }
-    
+	function getTextHtml(val, options) {
+		options = Object.assign({ bg: 'inherit', numberformat: 'vnd.ms-excel.numberformat:@' }, options)
+		console.log(options)
+		return `<td style="background-color:${options.bg};text-align: center;${options.numberformat}">${val}</td>`
+	}
+
+	// colspan
+
+	// rowspan
+
 	function getImageHtml(val, options) {
-		options = Object.assign({width: 40, height: 60}, options)
-		return `<td style="width: ${options.width}px; height: ${options.height}px; text-align: center; vertical-align: middle"><img src="${val}" width=${options.width} height=${options.height}></td>`
+		options = Object.assign({ width: 40, height: 60, bg: 'inherit' }, options)
+		return `<td style="background-color:${options.bg};width: ${options.width + 1}px; height: ${options.height + 1}px; text-align: center; vertical-align: middle"><img src="${val}" width=${options.width} height=${options.height}></td>`
 	}
 }
 
