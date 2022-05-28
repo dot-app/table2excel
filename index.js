@@ -142,12 +142,9 @@ const table2excel = (column, data, excelName) => {
 		let tds = ''
 
 		for (let j = 0; j < Object.keys(row).length; j++) {
-
-
 			let key = Object.keys(row)[j]
 			let col = row[key]
 			let value = col
-
 
 			let options = JSON.parse(JSON.stringify(column[j]))
 			if (typeof col === 'object') {
@@ -155,15 +152,11 @@ const table2excel = (column, data, excelName) => {
 				options = JSON.parse(JSON.stringify(Object.assign(options, col)))
 			}
 
-			console.log(options)
 			tds += typeMap[column[j].type || 'text'](value, options)
 		}
 		tbody += `<tr>${tds}</tr>`
 	}
 	tbody = `<tbody>${tbody}</tbody>`
-
-	// console.log(tbody)
-	// return;
 
 
 	const table = thead + tbody
@@ -173,12 +166,10 @@ const table2excel = (column, data, excelName) => {
 
 	function getTextHtml(val, options) {
 		options = Object.assign({ bg: 'inherit', numberformat: 'vnd.ms-excel.numberformat:@' }, options)
-		console.log(options)
 		return `<td style="background-color:${options.bg};text-align: center;${options.numberformat}">${val}</td>`
 	}
 
 	// colspan
-
 	// rowspan
 
 	function getImageHtml(val, options) {
