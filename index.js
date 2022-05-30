@@ -147,11 +147,14 @@ const table2excel = (column, data, excelName) => {
 			let value = col
 
 			let options = JSON.parse(JSON.stringify(column[j]))
-			if (typeof col === 'object') {
-				value = col.value;
-				options = JSON.parse(JSON.stringify(Object.assign(options, col)))
+			if (col === null) {
+				value = ''
+			} else {
+				if (typeof col === 'object') {
+					value = col.value;
+					options = JSON.parse(JSON.stringify(Object.assign(options, col)))
+				}
 			}
-
 			tds += typeMap[column[j].type || 'text'](value, options)
 		}
 		tbody += `<tr>${tds}</tr>`
